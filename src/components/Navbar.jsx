@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { User, LogOut } from "lucide-react"
 import { useAuth } from "../context/AuthContext"
@@ -10,6 +10,18 @@ const Navbar = ({ links, title }) => {
   const { user, logout } = useAuth()
   const location = useLocation()
   const navigate = useNavigate()
+  const dropdownRef = useRef(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
 
   const handleLogout = () => {
     logout()
@@ -60,7 +72,6 @@ const Navbar = ({ links, title }) => {
     }
   }
 
-  // Don't render navbar if no user
   if (!user) {
     return null
   }
@@ -80,7 +91,7 @@ const Navbar = ({ links, title }) => {
           ))}
         </ul>
 
-        <div className="profile-dropdown">
+        <div className="profile-dropdown" ref={dropdownRef}>
           <div onClick={() => setShowDropdown(!showDropdown)} style={{ cursor: "pointer" }}>
             {getProfileIcon()}
           </div>
