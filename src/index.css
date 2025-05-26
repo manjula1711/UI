@@ -96,11 +96,6 @@ body {
   background: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 0 20px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
 }
 
 .navbar-content {
@@ -108,8 +103,6 @@ body {
   justify-content: space-between;
   align-items: center;
   height: 60px;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .navbar-brand {
@@ -167,9 +160,7 @@ body {
 .dropdown-item {
   padding: 10px 15px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  transition: background-color 0.3s ease;
+  border-bottom: 1px solid #eee;
 }
 
 .dropdown-item:hover {
@@ -180,27 +171,52 @@ body {
   border-bottom: none;
 }
 
-.profile-container {
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
-  gap: 20px;
-  min-height: calc(100vh - 60px);
-  margin-top: 60px;
-}
-
-.profile-view-container {
-  display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 60px);
-  margin-top: 60px;
-  padding: 20px;
+  z-index: 1000;
 }
 
-.profile-image-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+.modal {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.table th {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+
+.table tr:hover {
+  background: #f8f9fa;
 }
 
 .sidebar {
@@ -209,16 +225,6 @@ body {
   border-right: 1px solid #eee;
   height: calc(100vh - 60px);
   padding: 20px 0;
-  position: fixed;
-  left: 0;
-  top: 60px;
-}
-
-.main-content {
-  flex: 1;
-  padding: 20px;
-  margin-left: 250px;
-  overflow-y: auto;
 }
 
 .sidebar-item {
@@ -234,4 +240,76 @@ body {
   color: #007bff;
 }
 
-/* Rest of your existing CSS */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.profile-container {
+  display: flex;
+  gap: 20px;
+  height: calc(100vh - 60px);
+}
+
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #007bff;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 15px;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #007bff;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
